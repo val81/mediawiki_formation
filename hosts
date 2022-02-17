@@ -11,7 +11,8 @@
 # Ex 1: Ungrouped hosts, specify before any group headers:
 
 #172.31.27.212 #machine cible
-172.31.20.16 #machine cible n2 
+#172.31.20.16 #machine cible n2 
+18.170.213.113 #machine cible n3
 ## green.example.com
 ## blue.example.com
 ## 192.168.100.1

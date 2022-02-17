@@ -13,4 +13,5 @@
   #- tools
   #- user
   #- nginx
-   - mediawiki
+  #- mediawiki
+   - docker
