@@ -1,0 +1,16 @@
+---
+- name: "test playbook"
+  hosts: all
+  vars:
+   user: bouboule
+   domaines:
+    - domaine: it.org
+      php: yes
+    - domaine: python.org
+      php: no 
+
+  roles:
+  #- tools
+  #- user
+  #- nginx
+   - mediawiki

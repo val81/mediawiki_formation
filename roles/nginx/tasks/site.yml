@@ -1,0 +1,26 @@
+- name : "Création de dossier"
+  file:
+   path: /home/{{ user }}/{{ item.domaine }}
+   state: directory
+   owner: "{{ user }}"
+
+- name : "Création du lien symbolique"
+  file:
+   src: /home/{{ user }}/{{ item.domaine  }}
+   dest: /var/www/{{ item.domaine  }}
+   state: link
+
+- name: "Conf nginx"
+  template:
+   src: templates/nginx.j2
+   dest: /etc/nginx/sites-available/{{ item.domaine  }}
+   force: yes
+  notify: nginx reload
+
+- name : "Activation du site"
+  file:
+   src: /etc/nginx/sites-available/{{ item.domaine  }}
+   dest: /etc/nginx/sites-enabled/{{ item.domaine  }}
+   state: link
+  notify: nginx reload
+

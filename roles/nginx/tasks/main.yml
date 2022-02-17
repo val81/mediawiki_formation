@@ -1,0 +1,25 @@
+---
+# tasks file for nginx
+- name: "install nginx "
+  apt:
+   name : nginx
+   state: present
+
+- name: "start/enable nginx"
+  service:
+   name: nginx
+   state: started
+   enabled: yes
+
+- name: "Suppression site default"
+  file:
+   path: /etc/nginx/sites-enabled/default
+   state: absent
+  notify: nginx reload
+
+- name: "Install PHP"
+  include: php.yml
+
+- name : "Création de sites"
+  include: site.yml 
+  with_items: "{{ domaines }}"

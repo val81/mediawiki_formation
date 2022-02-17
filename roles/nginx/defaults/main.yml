@@ -1,0 +1,21 @@
+---
+# defaults file for nginx
+
+php_packages: 
+  - php7.4-gd
+  - php7.4-curl
+  - php7.4-fpm
+  - php7.4-mysql
+  - php7.4-cli
+  - php7.4-common
+
+php_ini:
+  - key: post_max_size
+    value: 7M
+  - key: memory_limit
+    value: 100M
+  - key: upload_max_filesize
+    value: 3M
+  - key: date.timezone
+    value: 16/02/3022
+
