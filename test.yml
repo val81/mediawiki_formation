@@ -8,7 +8,7 @@
       php: yes
     - domaine: python.org
       php: no 
-
+   domain: test.fr
   roles:
   #- tools
   #- user

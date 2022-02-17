@@ -1,40 +1,30 @@
 ---
 # tasks file for mediawiki
+- name: "Create database user"
+  mysql_user:
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    name: val
+    password: 12345
+    priv: '*.*:ALL'
+    state: present
 
-- name: "installation prerequis"
-  apt:
-   name : " {{ item }} "
-   state: present
-  with_items:
-   - nginx
-   - mariadb-server
-   - mariadb-client
-   - php7.4 
-   - php7.4-fpm 
-   - php7.4-mysql 
-   - php-common
-   - php7.4-cli 
-   - php7.4-common 
-   - php7.4-json 
-   - php7.4-opcache 
-   - php7.4-readline 
-   - php7.4-mbstring 
-   - php7.4-xml 
-   - php7.4-gd 
-   - php7.4-curl
+- name: "Create a new database with name mediawiki"
+  mysql_db:
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    name: mediawiki
+    state: present
 
-- name: " start/enable prerequis "
-  service:
-   name: "{{ item }}"
-   state: started
-   enabled: yes
-  with_items:
-   - nginx
-   - mariadb
-   - php7.4-fpm
+- name: "conf nginx mediawiki"
+  template:
+   src: templates/mediawiki.j2
+   dest: /etc/nginx/sites-available/{{ domain }}
+   force: yes
+  notify: nginx reload
 
-- name: "installation mediawiki"
-  apt:
-   name : mediawiki
-   state: present
+- name : "Activation du site"
+  file:
+   src: /etc/nginx/sites-available/{{ domain  }}
+   dest: /etc/nginx/sites-enabled/{{ domain  }}
+   state: link
+  notify: nginx reload
 
