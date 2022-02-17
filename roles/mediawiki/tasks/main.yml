@@ -1,38 +1,8 @@
 ---
 # tasks file for mediawiki
 
-- name: "installation prerequis"
-  apt:
-   name : " {{ item }} "
-   state: present
-  with_items:
-   - nginx
-   - mariadb-server
-   - mariadb-client
-   - php7.4 
-   - php7.4-fpm 
-   - php7.4-mysql 
-   - php-common
-   - php7.4-cli 
-   - php7.4-common 
-   - php7.4-json 
-   - php7.4-opcache 
-   - php7.4-readline 
-   - php7.4-mbstring 
-   - php7.4-xml 
-   - php7.4-gd 
-   - php7.4-curl
-   - python3-pymysql
-
-- name: " start/enable prerequis "
-  service:
-   name: "{{ item }}"
-   state: started
-   enabled: yes
-  with_items:
-   - nginx
-   - mariadb
-   - php7.4-fpm
+- name: "installation prerequis serveur Lamp"
+  include: lamp.yml
 
 - name: "installation mediawiki"
   apt:
