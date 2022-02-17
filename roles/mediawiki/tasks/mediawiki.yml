@@ -1,0 +1,30 @@
+---
+# tasks file for mediawiki
+- name: "Create database user"
+  mysql_user:
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    name: val
+    password: 12345
+    priv: '*.*:ALL'
+    state: present
+
+- name: "Create a new database with name mediawiki"
+  mysql_db:
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    name: mediawiki
+    state: present
+
+- name: "conf nginx mediawiki"
+  template:
+   src: templates/mediawiki.j2
+   dest: /etc/nginx/sites-available/{{ domain }}
+   force: yes
+  notify: nginx reload
+
+- name : "Activation du site"
+  file:
+   src: /etc/nginx/sites-available/{{ domain  }}
+   dest: /etc/nginx/sites-enabled/{{ domain  }}
+   state: link
+  notify: nginx reload
+
