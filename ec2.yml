@@ -1,0 +1,6 @@
+---
+- name: "ec2 playbook"
+  hosts: localhost
+  vars:
+   user: bouboule
+  roles:
