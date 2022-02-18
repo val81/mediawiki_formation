@@ -1,2 +1,22 @@
 ---
 # tasks file for aws
+- name : "Install boto"
+  apt:
+   name: python3-boto
+
+- name : Create EC2 instance
+  ec2:
+   aws_access_key: "{{ acces_key }}"
+   aws_secret_key: "{{ secret_key }}"
+   instance_tags:
+    Name : Ansible_EC2_Auto_valentin
+    Date : 2022/02/18
+    Owner: Valentin
+   key_name: Valentin_Devops_Ausy
+   instance_type: t2.micro
+   image: ami-0015a39e4b7c0966f
+   wait : yes
+   group_id: sg-0a634e5aa260af323
+   region : eu-west-2
+   vpc_subnet_id: subnet-1172e96b
+   assign_public_ip: yes  
