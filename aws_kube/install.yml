@@ -5,4 +5,4 @@
   become : 1
   roles:
   #- docker
-   - kube
+   - kubeInstall

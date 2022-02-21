@@ -1,0 +1,22 @@
+---
+
+- name: "kubeInit for Master"
+  hosts: 3.9.177.230 
+  remote_user: ubuntu
+  become : 1
+  tasks:
+  - name: "creation fichier daemon.json" 
+    lineinfile:
+     state: present
+     create: yes 
+     path: /etc/docker/daemon.json
+     line : '{"exec-opts": ["native.cgroupdriver=systemd"]}'
+
+  - name : restart des services
+    ansible.builtin.systemd:
+     state: restarted
+     daemon_reload: yes
+     name: "{{ item }}"
+    with_items:
+     - docker
+     - kubelet
