@@ -1,0 +1,11 @@
+---
+- name: "aws test  playbook"
+  hosts: all
+  remote_user: ubuntu
+  become : 1
+  tasks:
+  - name: "mise à jour des packages"
+    apt:
+     update_cache: yes
+     name: "*"
+     state: latest

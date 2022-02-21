@@ -1,0 +1,35 @@
+---
+# tasks file for kube
+
+- name : desactivation de la swap
+  shell:
+   cmd: swapoff -a 
+
+- name : mise en place du dépot
+  apt:
+   name: " {{ item }} "
+   state: present
+  with_items:
+   - apt-transport-https
+   - curl
+
+- name: Add kube  GPG apt Key
+  apt_key:
+   url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+   state: present
+
+- name: Add kube  Repository
+  apt_repository:
+   repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+   state: present
+
+- name: install kube
+  apt:
+   update_cache: yes
+   name : " {{ item }} "
+   state: present
+  with_items:
+   - kubelet
+   - kubeadm
+   - kubectl
+   - kubernetes-cni

@@ -1,5 +1,6 @@
 ---
 # tasks file for aws
+
 - name : "Install boto"
   apt:
    name: python3-boto
@@ -9,14 +10,23 @@
    aws_access_key: "{{ acces_key }}"
    aws_secret_key: "{{ secret_key }}"
    instance_tags:
-    Name : Ansible_EC2_Auto_valentin
-    Date : 2022/02/18
-    Owner: Valentin
+    Name : "{{ Name }}"
+    Date : "{{ Date }}"
+    Owner: "{{ Owner }}"
    key_name: Valentin_Devops_Ausy
-   instance_type: t2.micro
+   instance_type: t2.medium
    image: ami-0015a39e4b7c0966f
    wait : yes
    group_id: sg-0a634e5aa260af323
    region : eu-west-2
    vpc_subnet_id: subnet-1172e96b
-   assign_public_ip: yes  
+   assign_public_ip: yes
+   count: "{{ count }}"
+  register: ec2
+
+- name: Save IP to inventory file
+  lineinfile:
+   dest: "{{hosts_file}}"
+   insertafter: '\[webservers\]'
+   line: '{{item.public_ip}} ansible_ssh_private_key_file="/root/Valentin_Devops_Ausy"'
+  with_items: "{{ec2.instances}}"

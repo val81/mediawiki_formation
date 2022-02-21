@@ -1,0 +1,8 @@
+---
+- name: "aws test  playbook"
+  hosts: all
+  remote_user: ubuntu
+  become : 1
+  roles:
+  #- docker
+   - kube

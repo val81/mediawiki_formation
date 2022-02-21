@@ -1,0 +1,11 @@
+---
+- name: "playbook aws kube"
+  hosts: localhost
+  vars:
+   Name: Ansible_EC2_kube_Valentin
+   Date: 2022/02/21
+   Owner: Valentin
+   count: 2 
+   hosts_file: /etc/ansible/hosts
+  roles:
+  - aws
